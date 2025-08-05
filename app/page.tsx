@@ -38,6 +38,8 @@ export default function RetroPortfolio() {
   // Add a hook to detect mobile
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768
 
+  const [showOwnerPopup, setShowOwnerPopup] = useState(false)
+
   useEffect(() => {
     const baseY = isMobile ? 80 : window.innerHeight - 180
     const icons: DesktopIcon[] = [
@@ -271,6 +273,11 @@ export default function RetroPortfolio() {
     }
   }
 
+  const handleStartClick = () => {
+    setShowOwnerPopup(true)
+    setTimeout(() => setShowOwnerPopup(false), 2000) // Hide after 2 seconds
+  }
+
   return (
     <div
       className={`h-screen w-full relative overflow-hidden cursor-crosshair pixel-desktop ${theme} ${isMobile ? "mobile" : ""}`}
@@ -460,6 +467,7 @@ export default function RetroPortfolio() {
         <div className="flex items-center gap-3 relative z-10 w-full">
           <div
             className={`px-4 py-2 rounded-none text-white font-mono text-sm cursor-pointer transition-colors border-2 pixel-button font-bold ${theme === "dark" ? "bg-pink-700 hover:bg-pink-600 border-pink-500" : "bg-purple-700 hover:bg-purple-600 border-purple-500"}`}
+            onClick={handleStartClick}
           >
             START
           </div>
@@ -501,6 +509,16 @@ export default function RetroPortfolio() {
           </div>
         </div>
       </div>
+
+      {/* Owner Popup */}
+      {showOwnerPopup && (
+        <div
+          className="absolute left-1/2 top-1/4 transform -translate-x-1/2 bg-white dark:bg-gray-900 border-4 border-pink-500 rounded-lg shadow-lg px-8 py-6 z-[9999] font-mono text-xl font-bold text-center"
+          style={{ pointerEvents: "none" }}
+        >
+          Nostalgic Dev's Desktop
+        </div>
+      )}
 
       {/* CRT Effect Overlay */}
       <div className={`absolute inset-0 pointer-events-none ${theme}`}>
